@@ -2,11 +2,13 @@
 // Name: Joaquin Gonzalez-Salgado
 // Date: September 1, 2026
 // Email: jgonzalezsalgado@hmc.edu 
-module counter(
+module counter #(parameter MAX ,
+                 parameter WIDTH) 
+(
     input   logic   clk,
     input   logic   reset,
     input   logic   enable,
-    output  logic [23:0] count
+    output  logic   [WIDTH-1:0] count
 );
 
 
@@ -14,8 +16,8 @@ module counter(
 	always_ff @(posedge clk) 
 	begin
 			if(reset == 0)  count <= 0;
-			else if(enable) begin
-                if(count == 10000000) count <= 0;
+			else if(enable == 0) begin
+                if(count == MAX) count <= 0;
                 else count <= count + 1;
             end
 	end
