@@ -1,3 +1,7 @@
+// Lab 1 - FPGA & MCU Setup & Testing
+// Name: Joaquin Gonzalez-Salgado
+// Date: September 1, 2026
+// Email: jgonzalezsalgado@hmc.edu 
 `timescale 1 ns/1 ns
 module segment_tb();
 
@@ -9,6 +13,7 @@ module segment_tb();
         .seg(seg)
         );
 
+    //HEX 7 Segment display checks
     initial begin
         s = 4'h0; #10;
         assert (seg == 7'b1000000)

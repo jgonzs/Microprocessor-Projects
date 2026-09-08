@@ -1,3 +1,7 @@
+// Lab 1 - FPGA & MCU Setup & Testing
+// Name: Joaquin Gonzalez-Salgado
+// Date: September 1, 2026
+// Email: jgonzalezsalgado@hmc.edu 
 `timescale 1 ns/1 ns
 module lab1_tb();
 
@@ -94,7 +98,7 @@ module lab1_tb();
         else
             $error("FAILED! The counter does not increase due to the clock at time: %0t.", $time);
 
-        //Same thing with reset, but if rest is on count should remain 0.
+        //Same thing with reset, but if reset is on count should remain 0.
         reset = 0;
         @(posedge dut.clk); #1;
         assert (dut.count == 0)

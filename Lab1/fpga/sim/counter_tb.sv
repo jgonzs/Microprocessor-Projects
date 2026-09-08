@@ -1,3 +1,7 @@
+// Lab 1 - FPGA & MCU Setup & Testing
+// Name: Joaquin Gonzalez-Salgado
+// Date: September 1, 2026
+// Email: jgonzalezsalgado@hmc.edu 
 `timescale 1 ns/1 ns
 module counter_tb();
 
