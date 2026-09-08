@@ -14,14 +14,14 @@ module lab1_jg(
 	localparam WIDTH = 24;
 	localparam MAX = 10000000;
 	
-	//Required for instantiations
+	//Intermediate Logic Used in instantiations
 	logic clk;
 	logic [WIDTH-1:0] count; 
 
-	//Switch to LED Logic
+	//Switch to LED Logic, and 2.4 Hz LED assignment
 	assign led[0] = s[0] ^ s[1]; //S0 XOR S1
 	assign led[1] = s[2] & s[3]; //S2 AND S3
-	assign led[2] = count[23]; //WIDTH-1
+	assign led[2] = count[WIDTH-1]; //WIDTH-1
 
 	// Internal high-speed oscillator (given in E155 tutorial)
 	HSOSC #(.CLKHF_DIV(2'b01)) //48MHz --> 24 MHz
