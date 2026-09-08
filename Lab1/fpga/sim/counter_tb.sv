@@ -34,7 +34,7 @@ module counter_tb();
         //Reset is pushed, so count should be 0
         reset  = 0;
         enable = 1;
-        @(posedge clk); #1;
+        #1;
         assert (count == 0)
             $display("PASSED! The counter resets as desired at time: %0t.", $time);
         else
@@ -42,7 +42,7 @@ module counter_tb();
 
         //Reset still psuhed, takes priority over enable pushed (if, else if statement)
         enable = 0;
-        @(posedge clk); #1;
+        #1;
         assert (count == 0)
             $display("PASSED! The counter behaves as desired at time: %0t.", $time);
         else
@@ -51,14 +51,14 @@ module counter_tb();
         //Reset is not pushed, but enable is not pushed either so count should be 0
         reset  = 1;
         enable = 1;
-        @(posedge clk); #1;
+        #1;
         assert (count == 0)
             $display("PASSED! The counter behaves as desired at time: %0t.", $time);
         else
             $error("FAILED! The counter behaves incorrectly at time: %0t.", $time);
 
         //Nothing has changed, no change to count
-        @(posedge clk); #1;
+        #1;
         assert (count == 0)
             $display("PASSED! The counter behaves as desired at time: %0t.", $time);
         else
@@ -66,53 +66,53 @@ module counter_tb();
 
         //Enable is now on! start counting
         enable = 0;
-        @(posedge clk); #1;
+        #1;
         assert (count == 1)
             $display("PASSED! The counter increments as desired at time: %0t.", $time);
         else
             $error("FAILED! The counter behaves incorrectly at time: %0t.", $time);
 
         //Enable is still on, count +1
-        @(posedge clk); #1;
+        #1;
         assert (count == 2)
             $display("PASSED! The counter increments as desired at time: %0t.", $time);
         else
             $error("FAILED! The counter behaves incorrectly at time: %0t.", $time);
 
         //Enable is still on, count +1
-        @(posedge clk); #1;
+        #1;
         assert (count == 3)
             $display("PASSED! The counter increments as desired at time: %0t.", $time);
         else
             $error("FAILED! The counter behaves incorrectly at time: %0t.", $time);
 
         //Enable is still on, count +1
-        @(posedge clk); #1;
+        #1;
         assert (count == 4)
             $display("PASSED! The counter increments as desired at time: %0t.", $time);
         else
             $error("FAILED! The counter behaves incorrectly at time: %0t.", $time);
 
         ////Enable is still on, count +1, however maximum count has been reached (for simplicity, I'm not waiting for 10 million)
-        @(posedge clk); #1;
+        #1;
         assert (count == 5)
             $display("PASSED! The counter reaches MAX as desired at time: %0t.", $time);
         else
             $error("FAILED! The counter behaves incorrectly at time: %0t.", $time);
 
         //Now that max has been reached, it should go back to 0
-        @(posedge clk); #1;
+        #1;
         assert (count == 0)
             $display("PASSED! The counter rolls over at MAX as desired at time: %0t.", $time);
         else
             $error("FAILED! The counter behaves incorrectly at time: %0t.", $time);
 
         //Now let's have the clock tick to add 1 to count (enable is still pressed)
-        @(posedge clk); #1;
+        #1;
 
         //And reset after. This should make the count drop back to 0. That should be all the necessary tests!
         reset = 0;
-        @(posedge clk); #1;
+        #1;
         assert (count == 0)
             $display("PASSED! The counter resets mid-count as desired at time: %0t.", $time);
         else
