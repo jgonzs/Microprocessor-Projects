@@ -11,8 +11,8 @@ module lab1_jg(
 );
 
 	//Verilog parameters to specify width and maximum count values
-	localparam WIDTH = 24;
-	localparam MAX = 10000000;
+	parameter WIDTH = 24;
+	parameter MAX = 10000000;
 	
 	//Intermediate Logic Used in instantiations
 	logic clk;
