@@ -5,9 +5,9 @@
 module scanning #(parameter MAX   = 12_000_000,   // 24 MHz / 2 Hz
                   parameter WIDTH = 24)
 (
-    input  logic       clk,
-    input  logic       reset,
-    input  logic       enable,
+    input  logic clk,
+    input  logic reset,
+    input  logic enable,
     output logic [3:0] rows
 );
     logic [WIDTH-1:0] count;
