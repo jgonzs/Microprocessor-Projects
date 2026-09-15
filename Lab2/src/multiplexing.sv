@@ -1,6 +1,6 @@
 // Lab 2 - Multiplexed 7-Segment Display
 // Name: Joaquin Gonzalez-Salgado
-// Date: September 10, 2026
+// Date: September 14, 2026
 // Email: jgonzalezsalgado@hmc.edu
 module multiplexing #(parameter MAX   = 50_000,   //480Hz
                       parameter WIDTH = 18)

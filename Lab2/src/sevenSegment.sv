@@ -1,8 +1,8 @@
 // Lab 2 - Multiplexed Display
 // Name: Joaquin Gonzalez-Salgado
-// Date: September 10, 2026
+// Date: September 14, 2026
 // Email: jgonzalezsalgado@hmc.edu
-
+//Reused from Lab1
 module sevenSegment(
     input   logic [3:0] s, //4-bit input from switches
 	output  logic [6:0] seg //7 bit output for A-F on the Seven Segment

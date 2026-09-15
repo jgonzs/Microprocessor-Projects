@@ -1,6 +1,6 @@
 // Lab 2 - Multiplexed 7-Segment Display
 // Name: Joaquin Gonzalez-Salgado
-// Date: September 10, 2026
+// Date: September 14, 2026
 // Email: jgonzalezsalgado@hmc.edu
 module lab2_jg(
     input  logic reset,
@@ -14,15 +14,18 @@ module lab2_jg(
     output logic inactive,
     output logic [6:0] seg
 );
+    //Parameters for multiplexing and scanning components
     parameter MUX_MAX    = 50_000;
     parameter MUX_WIDTH  = 18;
     parameter SCAN_MAX   = 12_000_000;
     parameter SCAN_WIDTH = 24;
 
+    //Necessary logic declarations
     logic clk;
     logic state;
     logic [3:0] s;
 
+    //Instantiations
     HSOSC #(.CLKHF_DIV(2'b01))
         hf_osc (.CLKHFPU(1'b1), .CLKHFEN(1'b1), .CLKHF(clk));
 
