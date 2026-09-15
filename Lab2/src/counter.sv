@@ -2,9 +2,9 @@
 module counter #(parameter MAX   = 12_000_000,
                  parameter WIDTH = 24)
 (
-    input  logic             clk,
-    input  logic             reset,    // active low
-    input  logic             enable,   // active high
+    input  logic clk,
+    input  logic reset,  
+    input  logic enable, 
     output logic [WIDTH-1:0] count
 );
     always_ff @(posedge clk) begin

@@ -34,8 +34,8 @@ module lab2_jg(
 
     sevenSegment segment (.s(s), .seg(seg));
 
-    assign s        = state ? s2 : s1;
-    assign active   = state;
-    assign inactive = ~state;
-    assign led      = ~cols;     // pullups: column goes low on press
+    assign s        = state ? s2 : s1;  //multiplexing operation
+    assign active   = state;     //common anode 1
+    assign inactive = ~state;    //common anode 2
+    assign led      = ~cols;     //column goes low on press due to pullups
 endmodule

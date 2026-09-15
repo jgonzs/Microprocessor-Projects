@@ -2,11 +2,7 @@
 // Name: Joaquin Gonzalez-Salgado
 // Date: September 10, 2026
 // Email: jgonzalezsalgado@hmc.edu
-//
-// multiplexing: toggles which digit is shown. Uses a parametrized instance
-// of the Lab 1 counter; 'state' is low for the first half of the period
-// (show s1) and high for the second half (show s2).
-module multiplexing #(parameter MAX   = 50_000,   // 24 MHz / 480 Hz
+module multiplexing #(parameter MAX   = 50_000,   //480Hz
                       parameter WIDTH = 18)
 (
     input  logic clk,
