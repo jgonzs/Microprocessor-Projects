@@ -15,8 +15,8 @@ module scanning #(parameter MAX   = 12_000_000,   // 24 MHz / 2 Hz
     counter #(.MAX(MAX), .WIDTH(WIDTH))
         scanCounter (.clk(clk), .reset(reset), .enable(enable), .count(count));
 
-    assign rows[3] = (count <   MAX/4);
-    assign rows[2] = (count >=  MAX/4) & (count < MAX/2);
-    assign rows[1] = (count >=  MAX/2) & (count < 3*MAX/4);
+    assign rows[3] = (count < MAX/4);
+    assign rows[2] = (count >= MAX/4) & (count < MAX/2);
+    assign rows[1] = (count >= MAX/2) & (count < 3*MAX/4);
     assign rows[0] = (count >= 3*MAX/4);
 endmodule
