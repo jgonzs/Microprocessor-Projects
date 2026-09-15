@@ -14,10 +14,10 @@ module lab2_jg(
     output logic inactive,
     output logic [6:0] seg
 );
-    localparam MUX_MAX    = 50_000;
-    localparam MUX_WIDTH  = 18;
-    localparam SCAN_MAX   = 12_000_000;
-    localparam SCAN_WIDTH = 24;
+    parameter MUX_MAX    = 50_000;
+    parameter MUX_WIDTH  = 18;
+    parameter SCAN_MAX   = 12_000_000;
+    parameter SCAN_WIDTH = 24;
 
     logic clk;
     logic state;
