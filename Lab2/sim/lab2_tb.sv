@@ -5,25 +5,21 @@
 `timescale 1 ns/1 ns
 module lab2_tb();
 
-    //Small numbers so the whole thing fits in a short simulation.
-    //Same idea as counter_tb in lab 1: the real board uses 50,000 and 12,000,000,
-    //but any MAX/WIDTH pair is correct, so we shrink them for the testbench.
-    //MUX_MAX = 8  -> digit 1 for 4 clocks, digit 2 for 4 clocks
-    //SCAN_MAX = 8 -> each row lit for 2 clocks
-    localparam MUX_MAX    = 8;
-    localparam MUX_WIDTH  = 3;
-    localparam SCAN_MAX   = 8;
+    //Note, smaller so that it is easier to read in sim.
+    localparam MUX_MAX = 8;
+    localparam MUX_WIDTH = 3;
+    localparam SCAN_MAX = 8;
     localparam SCAN_WIDTH = 3;
 
-    logic       reset;
-    logic       enable;
+    logic reset;
+    logic enable;
     logic [3:0] s1;
     logic [3:0] s2;
     logic [3:0] cols;
     logic [3:0] rows;
     logic [3:0] led;
-    logic       active;
-    logic       inactive;
+    logic active;
+    logic inactive;
     logic [6:0] seg;
 
     lab2_jg #(.MUX_MAX(MUX_MAX),   .MUX_WIDTH(MUX_WIDTH),

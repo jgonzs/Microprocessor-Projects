@@ -5,9 +5,9 @@
 `timescale 1 ns/1 ns
 module scanning_tb();
 
-    logic       clk;
-    logic       reset;
-    logic       enable;
+    logic clk;
+    logic reset;
+    logic enable;
     logic [3:0] rows;
 
     //Note, I used smaller numbers for the testbench (same trick as counter_tb).
@@ -92,7 +92,7 @@ module scanning_tb();
             $error("FAILED! Rows are not one-hot at time: %0t.", $time);
 
         //ENABLE mid-scan: freeze on a row that is not the reset row
-        #20;   // now at count 2 -> rows = 0100
+        #20;   //now at count 2 -> rows = 0100
         enable = 0;
         #30;
         assert (rows == 4'b0100)
