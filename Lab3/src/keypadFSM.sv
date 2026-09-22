@@ -7,6 +7,7 @@ module keypadFSM(
     input  logic reset,
     input  logic anyKey,    //at least one column low on the active row
     input  logic oneKey,    //exactly one column low on the active row
+    input  logic sameKey,   //decoded key equals the most recently stored digit
     input  logic dbDone,    //debounce timer expired
     output logic scanEn,    //lets the scanner advance to the next row
     output logic dbClear,   //holds the debounce timer at zero
@@ -25,7 +26,8 @@ module keypadFSM(
             IDLE:     if (oneKey)       nextstate = DEBOUNCE;
             DEBOUNCE: if (!oneKey)      nextstate = IDLE;
                       else if (dbDone)  nextstate = HOLD;
-            HOLD:     if (!anyKey)      nextstate = IDLE;
+            HOLD:     if (!anyKey)                nextstate = IDLE;
+                      else if (oneKey & !sameKey)  nextstate = DEBOUNCE;
             default:                    nextstate = IDLE;
         endcase
     end

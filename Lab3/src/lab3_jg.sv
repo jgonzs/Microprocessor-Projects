@@ -14,7 +14,7 @@ module lab3_jg(
     logic clk;
     logic state;
     logic scanEn;
-    logic anyKey, oneKey;
+    logic anyKey, oneKey, sameKey;
     logic dbClear, dbDone;
     logic newKey;
     logic [3:0] colsSync;
@@ -35,7 +35,7 @@ module lab3_jg(
 
     debounceTimer debounceTimer(.clk(clk), .reset(reset), .clear(dbClear), .done(dbDone));
 
-    keypadFSM keypadFSM(.clk(clk), .reset(reset), .anyKey(anyKey), .oneKey(oneKey), .dbDone(dbDone),
+    keypadFSM keypadFSM(.clk(clk), .reset(reset), .anyKey(anyKey), .oneKey(oneKey), .sameKey(sameKey), .dbDone(dbDone),
     .scanEn(scanEn), .dbClear(dbClear), .newKey(newKey));
 
     digitRegister digitRegister(.clk(clk), .reset(reset), .enable(newKey), .sNew(sNew),
@@ -45,6 +45,7 @@ module lab3_jg(
 
     sevenSegment sevenSegment(.s(s), .seg(seg));
 
+    assign sameKey  = (sNew == s2);
     assign s = state ? s2 : s1;  //multiplexing operation
     assign active = state;    //common anode 1
     assign inactive = ~state; //common anode 2
