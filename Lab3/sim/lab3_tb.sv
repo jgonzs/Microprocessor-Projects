@@ -69,7 +69,7 @@ module lab3_tb();
         else
             $error("FAILED! The first key did not register correctly at time: %0t.", $time);
 
-        assert (dut.fsm.state == 2'd2)   //HOLD
+        assert (dut.keypadFSM.state == 2'd2)   //HOLD
             $display("PASSED! The FSM holds the first key at time: %0t.", $time);
         else
             $error("FAILED! The FSM did not reach HOLD for the first key at time: %0t.", $time);
@@ -77,7 +77,7 @@ module lab3_tb();
         //RELEASE - every column reads high again
         cols = 4'b1111;
         repeat (500_000) @(posedge clk); #1;
-        assert (dut.fsm.state == 2'd0)   //IDLE
+        assert (dut.keypadFSM.state == 2'd0)   //IDLE
             $display("PASSED! The FSM returns to IDLE after release at time: %0t.", $time);
         else
             $error("FAILED! The FSM did not return to IDLE after release at time: %0t.", $time);

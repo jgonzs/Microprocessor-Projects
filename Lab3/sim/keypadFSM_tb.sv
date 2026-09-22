@@ -6,17 +6,15 @@
 module keypadFSM_tb();
 
     //State encoding matches the declaration order in keypadFSM.sv:
-    //IDLE=0, DEBOUNCE=1, HOLD=2, RELEASE=3
+    //IDLE=0, DEBOUNCE=1, HOLD=2
     localparam IDLE     = 2'd0;
     localparam DEBOUNCE = 2'd1;
     localparam HOLD     = 2'd2;
-    localparam RELEASE  = 2'd3;
 
     logic clk;
     logic reset;
     logic anyKey;
     logic oneKey;
-    logic sameKey;
     logic dbDone;
     logic scanEn;
     logic dbClear;
@@ -27,7 +25,6 @@ module keypadFSM_tb();
         .reset(reset),
         .anyKey(anyKey),
         .oneKey(oneKey),
-        .sameKey(sameKey),
         .dbDone(dbDone),
         .scanEn(scanEn),
         .dbClear(dbClear),
@@ -43,11 +40,10 @@ module keypadFSM_tb();
 
     initial begin
         //RESET FEATURE
-        reset   = 0;
-        anyKey  = 0;
-        oneKey  = 0;
-        sameKey = 0;
-        dbDone  = 0;
+        reset  = 0;
+        anyKey = 0;
+        oneKey = 0;
+        dbDone = 0;
         #1;
         assert (dut.state == IDLE && scanEn == 1 && dbClear == 1 && newKey == 0)
             $display("PASSED! The FSM resets to IDLE and scans as desired at time: %0t.", $time);
@@ -106,67 +102,31 @@ module keypadFSM_tb();
         else
             $error("FAILED! DEBOUNCE -> HOLD transition incorrect at time: %0t.", $time);
 
-        //HOLD holds while the same key stays pressed
-        dbDone = 0; sameKey = 1;
+        //HOLD holds while the key stays pressed
+        dbDone = 0;
         @(posedge clk); #1;
         assert (dut.state == HOLD)
-            $display("PASSED! HOLD holds on the same key at time: %0t.", $time);
+            $display("PASSED! HOLD holds while the key is still down at time: %0t.", $time);
         else
-            $error("FAILED! HOLD did not hold on the same key at time: %0t.", $time);
+            $error("FAILED! HOLD did not hold as desired at time: %0t.", $time);
 
-        //HOLD -> DEBOUNCE if a different key appears on the same row (rollover)
-        sameKey = 0;
-        @(posedge clk); #1;
-        assert (dut.state == DEBOUNCE)
-            $display("PASSED! HOLD -> DEBOUNCE on a different key at time: %0t.", $time);
-        else
-            $error("FAILED! HOLD -> DEBOUNCE transition incorrect at time: %0t.", $time);
-
-        //Debounce the second key and return to HOLD
-        dbDone = 1;
+        //HOLD ignores a different key appearing on the same row (no rollover
+        //re-debounce now that sameKey has been removed) as long as anyKey stays high
+        oneKey = 0;
         @(posedge clk); #1;
         assert (dut.state == HOLD)
-            $display("PASSED! DEBOUNCE -> HOLD for the second key at time: %0t.", $time);
+            $display("PASSED! HOLD stays put on a rollover since anyKey is still high at time: %0t.", $time);
         else
-            $error("FAILED! DEBOUNCE -> HOLD transition incorrect at time: %0t.", $time);
+            $error("FAILED! HOLD left state on a rollover at time: %0t.", $time);
 
-        //HOLD -> RELEASE once every column reads high again
-        dbDone = 0; anyKey = 0; oneKey = 0;
-        @(posedge clk); #1;
-        assert (dut.state == RELEASE && scanEn == 0 && dbClear == 0)
-            $display("PASSED! HOLD -> RELEASE on release at time: %0t.", $time);
-        else
-            $error("FAILED! HOLD -> RELEASE transition incorrect at time: %0t.", $time);
-
-        //RELEASE -> HOLD if a column bounces low again during release
-        anyKey = 1;
-        @(posedge clk); #1;
-        assert (dut.state == HOLD)
-            $display("PASSED! RELEASE -> HOLD on a release bounce at time: %0t.", $time);
-        else
-            $error("FAILED! RELEASE -> HOLD transition incorrect at time: %0t.", $time);
-
-        //Back to RELEASE, and hold there until the release debounces
+        //HOLD -> IDLE as soon as every column reads high again (no separate
+        //release-debounce state anymore)
         anyKey = 0;
         @(posedge clk); #1;
-        assert (dut.state == RELEASE)
-            $display("PASSED! HOLD -> RELEASE again at time: %0t.", $time);
-        else
-            $error("FAILED! HOLD -> RELEASE transition incorrect at time: %0t.", $time);
-
-        @(posedge clk); #1;
-        assert (dut.state == RELEASE)
-            $display("PASSED! RELEASE holds while dbDone is low at time: %0t.", $time);
-        else
-            $error("FAILED! RELEASE did not hold as desired at time: %0t.", $time);
-
-        //RELEASE -> IDLE once the release debounces
-        dbDone = 1;
-        @(posedge clk); #1;
         assert (dut.state == IDLE && scanEn == 1 && dbClear == 1)
-            $display("PASSED! RELEASE -> IDLE once debounced at time: %0t.", $time);
+            $display("PASSED! HOLD -> IDLE immediately on release at time: %0t.", $time);
         else
-            $error("FAILED! RELEASE -> IDLE transition incorrect at time: %0t.", $time);
+            $error("FAILED! HOLD -> IDLE transition incorrect at time: %0t.", $time);
 
         //RESET mid-sequence - reset is synchronous, so it takes effect on the
         //next clock edge, not immediately
