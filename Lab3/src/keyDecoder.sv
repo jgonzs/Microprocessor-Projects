@@ -9,9 +9,9 @@ module keyDecoder(
     output logic anyKey,
     output logic oneKey
 );
-    assign anyKey = (cols != 4'b1111);
-    assign oneKey = (cols == 4'b1110) | (cols == 4'b1101) |
-                    (cols == 4'b1011) | (cols == 4'b0111);
+    assign anyKey = (cols != 4'b1111); //anything got pressed, any column was pulled low
+    assign oneKey = (cols == 4'b1110) | (cols == 4'b1101) | 
+    (cols == 4'b1011) | (cols == 4'b0111); //only ONE column was pulled low
 
     always_comb begin
         case({rows, cols})

@@ -5,10 +5,10 @@
 module scanning(
     input  logic clk,
     input  logic reset,
-    input  logic enable,      //1 = keep scanning, 0 = freeze on the current row
+    input  logic enable, 
     output logic [3:0] rows
 );
-    localparam MAX   = 24_000;  //1 kHz row rate at 24 MHz
+    localparam MAX   = 24_000; //1000 Hz
     localparam WIDTH = 15;
 
     logic [WIDTH-1:0] count;

@@ -2,7 +2,7 @@
 // Name: Joaquin Gonzalez-Salgado
 // Date: September 17, 2026
 // Email: jgonzalezsalgado@hmc.edu
-module counter #(parameter MAX   = 12_000_000,
+module counter #(parameter MAX = 12_000_000,
                  parameter WIDTH = 24)
 (
     input  logic clk,

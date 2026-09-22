@@ -5,17 +5,16 @@
 module debounceTimer(
     input  logic clk,
     input  logic reset,
-    input  logic clear,   //synchronous clear from the FSM, active high
+    input  logic clear, //clear from FSM
     output logic done
 );
-    logic [18:0] count;   //20 ms
+    localparam MAX = 480000; //20 ms, for the button bounce!
+    localparam WIDTH = 19;
 
-    always_ff @(posedge clk) begin
-        if (!reset)                 count <= 0;
-        else if (clear)             count <= 0;
-        else if (count == 479999)   count <= 0;
-        else                        count <= count + 1;
-    end
+    logic [WIDTH-1:0] count;
 
-    assign done = (count == 479_999);
+    counter #(.MAX(MAX), .WIDTH(WIDTH))
+        debounceCounter (.clk(clk), .reset(reset), .enable(1'b1), .clear(clear), .count(count));
+
+    assign done = (count == MAX-1);
 endmodule

@@ -14,10 +14,19 @@ module lab3_jg(
     logic clk;
     logic state;
     logic scanEn;
-    logic anyKey, oneKey, sameKey;
-    logic dbClear, dbDone;
-    logic newKey;
     logic [3:0] colsSync;
+
+    //Key Decoder Logic
+    logic anyKey; 
+    logic oneKey; 
+    logic sameKey;
+    logic newKey;
+
+    //Debounce Logic
+    logic dbClear;
+    logic dbDone;
+  
+    //Digit logic
     logic [3:0] sNew;
     logic [3:0] s1;
     logic [3:0] s2;
@@ -46,7 +55,7 @@ module lab3_jg(
     sevenSegment sevenSegment(.s(s), .seg(seg));
 
     assign sameKey  = (sNew == s2);
-    assign s = state ? s2 : s1;  //multiplexing operation
+    assign s = state ? s2 : s1;  //multiplexer
     assign active = state;    //common anode 1
     assign inactive = ~state; //common anode 2
     assign led = ~colsSync;  //for debug!!

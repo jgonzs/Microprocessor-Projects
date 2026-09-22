@@ -8,7 +8,7 @@ module multiplexing(
     input  logic enable,
     output logic state
 );
-    localparam MAX = 50_000;  //480 Hz 
+    localparam MAX = 50_000; //480 Hz 
     localparam WIDTH = 18;
 
     logic [WIDTH-1:0] count;
