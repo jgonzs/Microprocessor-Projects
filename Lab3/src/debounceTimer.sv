@@ -13,8 +13,12 @@ module debounceTimer(
 
     logic [WIDTH-1:0] count;
 
-    counter #(.MAX(MAX), .WIDTH(WIDTH))
-        debounceCounter (.clk(clk), .reset(reset), .enable(1'b1), .clear(clear), .count(count));
+    always_ff @(posedge clk) begin
+        if (!reset)               count <= 0;
+        else if (clear)           count <= 0;
+        else if (count == MAX-1)  count <= 0;
+        else                      count <= count + 1;
+    end
 
     assign done = (count == MAX-1);
 endmodule
