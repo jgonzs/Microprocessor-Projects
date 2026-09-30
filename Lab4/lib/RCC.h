@@ -1,0 +1,58 @@
+//Lab 4: Digital Audio
+//RCC Header File
+//Joaquin Gonzalez-Salgado
+//jgonzalezsalgado@hmc.edu
+
+#ifndef RCC_H
+#define RCC_H
+
+#include <stdint.h>
+
+#define RCC_BASE (0x40021000) //base address of RCC
+
+typedef struct
+{
+  volatile uint32_t CR;          //Address offset: 0x00 
+  volatile uint32_t ICSCR;       //Address offset: 0x04 
+  volatile uint32_t CFGR;        //Address offset: 0x08 
+  volatile uint32_t PLLCFGR;     //Address offset: 0x0C 
+  volatile uint32_t PLLSAI1CFGR; //Address offset: 0x10 
+  volatile uint32_t RESERVED;    //Address offset: 0x14 
+  volatile uint32_t CIER;        //Address offset: 0x18 
+  volatile uint32_t CIFR;        //Address offset: 0x1C 
+  volatile uint32_t CICR;        //Address offset: 0x20 
+  volatile uint32_t RESERVED0;   //Address offset: 0x24 
+  volatile uint32_t AHB1RSTR;    //Address offset: 0x28 
+  volatile uint32_t AHB2RSTR;    //Address offset: 0x2C 
+  volatile uint32_t AHB3RSTR;    //Address offset: 0x30 
+  volatile uint32_t RESERVED1;   //Address offset: 0x34 
+  volatile uint32_t APB1RSTR1;   //Address offset: 0x38 
+  volatile uint32_t APB1RSTR2;   //Address offset: 0x3C 
+  volatile uint32_t APB2RSTR;    //Address offset: 0x40 
+  volatile uint32_t RESERVED2;   //Address offset: 0x44 
+  volatile uint32_t AHB1ENR;     //Address offset: 0x48 
+  volatile uint32_t AHB2ENR;     //Address offset: 0x4C 
+  volatile uint32_t AHB3ENR;     //Address offset: 0x50 
+  volatile uint32_t RESERVED3;   //Address offset: 0x54 
+  volatile uint32_t APB1ENR1;    //Address offset: 0x58 
+  volatile uint32_t APB1ENR2;    //Address offset: 0x5C 
+  volatile uint32_t APB2ENR;     //Address offset: 0x60 
+  volatile uint32_t RESERVED4;   //Address offset: 0x64 
+  volatile uint32_t AHB1SMENR;   //Address offset: 0x68 
+  volatile uint32_t AHB2SMENR;   //Address offset: 0x6C 
+  volatile uint32_t AHB3SMENR;   //Address offset: 0x70 
+  volatile uint32_t RESERVED5;   //Address offset: 0x74 
+  volatile uint32_t APB1SMENR1;  //Address offset: 0x78 
+  volatile uint32_t APB1SMENR2;  //Address offset: 0x7C
+  volatile uint32_t APB2SMENR;   //Address offset: 0x80 
+  volatile uint32_t RESERVED6;   //Address offset: 0x84 
+  volatile uint32_t CCIPR;       //Address offset: 0x88 
+  volatile uint32_t RESERVED7;   //Address offset: 0x8C 
+  volatile uint32_t BDCR;        //Address offset: 0x90 
+  volatile uint32_t CSR;         //Address offset: 0x94 
+  volatile uint32_t CRRCR;       //Address offset: 0x98 
+} RCC_TypeDef;
+
+#define RCC ((RCC_TypeDef *) RCC_BASE)
+
+#endif
