@@ -13,8 +13,12 @@
 // Custom defines
 ///////////////////////////////////////////////////////////////////////////////
 
-#define LED_PIN PB3
-#define BUTTON_PIN PA7
+#define ENC_A_PIN PA6
+#define ENC_B_PIN PA8
 #define DELAY_TIM TIM2
+
+#define ENC_PPR 408                 // pulses per output shaft rev (one channel)
+#define ENC_CPR (4 * ENC_PPR)       // counts per rev using both edges of A and B
+#define SAMPLE_WINDOW_MS 500        // 2 Hz update rate
 
 #endif // MAIN_H

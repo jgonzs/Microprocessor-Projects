@@ -1,41 +1,41 @@
-// button_polling.c
+// encoder_polling.c
 // Josh Brake
 // jbrake@hmc.edu
 // 10/31/22
 
 /*
-  This program polls the user button on the Nucleo-L432KC board and has a
-  delay within the main loop to simulate the problems with polling for 
-  catching events.
+  This program polls the motor encoder instead of using interrupts. It has a
+  delay within the main loop to simulate the problems with polling for
+  catching events. Build this instead of main.c, not alongside it.
 */
 
 #include "main.h"
 
 int main(void) {
-    // Enable LED as output
-    gpioEnable(GPIO_PORT_B);
-    pinMode(LED_PIN, GPIO_OUTPUT);
-
-    // Enable button as input
+    // Enable encoder channels as inputs
     gpioEnable(GPIO_PORT_A);
-    pinMode(BUTTON_PIN, GPIO_INPUT);
-    GPIOA->PUPDR |= (0b01 << 2*gpioPinOffset(BUTTON_PIN)); // Set PA7 as pull-up (PUPD7 = 01)
+    pinMode(ENC_A_PIN, GPIO_INPUT);
+    pinMode(ENC_B_PIN, GPIO_INPUT);
+    GPIOA->PUPDR |= (0b01 << 2*gpioPinOffset(ENC_A_PIN)); // Set PA6 as pull-up
+    GPIOA->PUPDR |= (0b01 << 2*gpioPinOffset(ENC_B_PIN)); // Set PA8 as pull-up
 
     // Initialize timer
     RCC->APB1ENR1 |= (1 << 0); // TIM2EN
     initTIM(DELAY_TIM);
 
-    int volatile cur_button_state = digitalRead(BUTTON_PIN);
-    int volatile led_state = 0;
-    int volatile prev_button_state = cur_button_state;
+    int volatile cur_a = digitalRead(ENC_A_PIN);
+    int volatile cur_b = digitalRead(ENC_B_PIN);
+    int volatile prev_a = cur_a;
+    int volatile prev_b = cur_b;
+    int32_t volatile enc_count = 0;
 
     while(1){
-        prev_button_state = cur_button_state;
-        cur_button_state = digitalRead(BUTTON_PIN);
-        if ((prev_button_state == 1) && (cur_button_state == 0)) {
-            led_state = !led_state;
-            digitalWrite(LED_PIN, led_state);
-        }
-        delay_millis(DELAY_TIM, 200);
+        prev_a = cur_a;
+        prev_b = cur_b;
+        cur_a = digitalRead(ENC_A_PIN);
+        cur_b = digitalRead(ENC_B_PIN);
+        if (cur_a != prev_a) enc_count += (cur_a != cur_b) ? 1 : -1;
+        if (cur_b != prev_b) enc_count += (cur_a == cur_b) ? 1 : -1;
+        delay_millis(DELAY_TIM, 1);
     }
 }
