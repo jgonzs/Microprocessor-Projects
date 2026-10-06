@@ -3,12 +3,6 @@
 // jbrake@hmc.edu
 // 10/31/22
 
-/*
-  This program polls the motor encoder instead of using interrupts. It has a
-  delay within the main loop to simulate the problems with polling for
-  catching events. Build this instead of main.c, not alongside it.
-*/
-
 #include "main.h"
 
 int main(void) {
